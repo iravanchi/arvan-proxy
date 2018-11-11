@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Arvan.Proxy.IaaS</AssemblyName>
+    <RootNamespace>Arvan.Proxy.IaaS</RootNamespace>
+  </PropertyGroup>
+</Project>
