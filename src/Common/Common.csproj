@@ -6,4 +6,8 @@
         <RootNamespace>Arvan.Proxy.Common</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="ClayOne.Hydrogen.General" Version="0.0.16" />
+    </ItemGroup>
+
 </Project>
