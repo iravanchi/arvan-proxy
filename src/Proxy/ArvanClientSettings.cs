@@ -1,6 +1,6 @@
 namespace Arvan.Proxy
 {
-    public class ArvanProxySettings
+    public class ArvanClientSettings
     {
         public bool ThrowOnErrorStatusCode { get; set; } = false;
     }

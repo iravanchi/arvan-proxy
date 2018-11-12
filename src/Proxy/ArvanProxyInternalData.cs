@@ -4,7 +4,8 @@ namespace Arvan.Proxy
 {
     public class ArvanProxyInternalData
     {
-        public ArvanProxySettings Settings { get; set; }
+        public ArvanClient ClientInstance { get; set; }
+        public ArvanClientSettings Settings { get; set; }
         public HttpClient HttpClient { get; set; }
     }
 }
