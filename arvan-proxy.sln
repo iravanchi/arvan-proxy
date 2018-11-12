@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageBrowserSample", "sam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy", "src\Proxy\Proxy.csproj", "{F290B775-F321-46D4-855B-A5C312587695}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy.Tests", "test\Proxy.Tests\Proxy.Tests.csproj", "{5273B6A3-FC64-4772-A24D-F6B6FED7C5CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,9 +26,14 @@ Global
 		{F290B775-F321-46D4-855B-A5C312587695}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F290B775-F321-46D4-855B-A5C312587695}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F290B775-F321-46D4-855B-A5C312587695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5273B6A3-FC64-4772-A24D-F6B6FED7C5CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5273B6A3-FC64-4772-A24D-F6B6FED7C5CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5273B6A3-FC64-4772-A24D-F6B6FED7C5CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5273B6A3-FC64-4772-A24D-F6B6FED7C5CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6951D5B3-F799-49D8-9D7D-65D7FF10EEC0} = {2A7B35D5-F468-4130-9924-E5DD8DA35676}
 		{F290B775-F321-46D4-855B-A5C312587695} = {1178DED4-729D-4714-AF55-7CE9D283402B}
+		{5273B6A3-FC64-4772-A24D-F6B6FED7C5CA} = {CD1D9687-E3A9-4ACB-A25B-009D57F6A612}
 	EndGlobalSection
 EndGlobal
