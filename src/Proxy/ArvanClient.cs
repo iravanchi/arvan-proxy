@@ -12,25 +12,8 @@ namespace Arvan.Proxy
 
         public ArvanClient()
         {
-            throw new NotImplementedException();
-        }
-
-        public ArvanClient(HttpClient httpClient)
-        {
-            _internalData = new ArvanProxyInternalData
-            {
-                ClientInstance = this,
-                Settings = new ArvanClientSettings(),
-                HttpClient = httpClient
-            };
-
-            InitializeClients();
-        }
-
-        public ArvanClient(Uri baseUri)
-        {
             var httpClient = new HttpClient();
-            httpClient.BaseAddress = baseUri;
+            httpClient.BaseAddress = new Uri("https://napi.arvancloud.com/");
 
             _internalData = new ArvanProxyInternalData
             {
