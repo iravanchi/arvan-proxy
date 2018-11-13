@@ -1,3 +1,4 @@
+using Arvan.Proxy.Authorization;
 using Microsoft.Extensions.Configuration;
 
 namespace Arvan.Proxy.Tests.Base
@@ -14,9 +15,7 @@ namespace Arvan.Proxy.Tests.Base
                 .Build();
 
             var apiKey = config.GetValue<string>("ApiKey");
-
-            Client = new ArvanClient();
-            
+            Client = new ArvanClient(new ApiKeyRequestAuthorization(apiKey));
         }
     }
 }

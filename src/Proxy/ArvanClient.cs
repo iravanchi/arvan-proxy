@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using Arvan.Proxy.Authorization;
 using Arvan.Proxy.Products;
 
 namespace Arvan.Proxy
@@ -23,6 +24,11 @@ namespace Arvan.Proxy
             };
 
             InitializeClients();
+        }
+
+        public ArvanClient(RequestAuthorizationBase authorization) : this()
+        {
+            _internalData.Settings.RequestAuthorization = authorization;
         }
 
         private void InitializeClients()

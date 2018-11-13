@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Arvan.Proxy
 {
-    public class ArvanProxyBase
+    public abstract class ArvanProxyBase
     {
         private readonly ArvanProxyInternalData _internalData;
 
@@ -36,6 +36,8 @@ namespace Arvan.Proxy
             
             if (request != null)
                 payload.Content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+
+            _internalData.Settings.RequestAuthorization?.Apply(payload);
 
             var response = await HttpClient.SendAsync(payload);
             ThrowOnErrorIfRequired(response);
