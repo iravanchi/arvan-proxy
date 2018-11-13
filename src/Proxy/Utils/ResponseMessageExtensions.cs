@@ -2,8 +2,8 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using hydrogen.General.Utils;
-using hydrogen.General.Validation;
+using Hydrogen.General.Utils;
+using Hydrogen.General.Validation;
 using Newtonsoft.Json;
 
 namespace Arvan.Proxy.Utils

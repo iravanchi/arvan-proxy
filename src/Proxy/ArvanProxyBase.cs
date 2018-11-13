@@ -3,8 +3,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Arvan.Proxy.Utils;
-using hydrogen.General.Text;
-using hydrogen.General.Validation;
+using Hydrogen.General.Text;
+using Hydrogen.General.Validation;
 using Newtonsoft.Json;
 
 namespace Arvan.Proxy
