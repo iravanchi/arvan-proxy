@@ -1,9 +1,11 @@
 using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Arvan.Proxy.Utils;
 using hydrogen.General.Text;
 using hydrogen.General.Validation;
+using Newtonsoft.Json;
 
 namespace Arvan.Proxy
 {
@@ -32,9 +34,8 @@ namespace Arvan.Proxy
 
             var payload = new HttpRequestMessage(method, address);
             
-            // TODO
-//            if (request != null)
-//                payload.Content = new StringContent(request.ToJson(), Encoding.UTF8, "application/json");
+            if (request != null)
+                payload.Content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
             var response = await HttpClient.SendAsync(payload);
             ThrowOnErrorIfRequired(response);

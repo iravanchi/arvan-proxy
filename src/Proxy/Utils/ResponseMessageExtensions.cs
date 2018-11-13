@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using hydrogen.General.Utils;
 using hydrogen.General.Validation;
+using Newtonsoft.Json;
 
 namespace Arvan.Proxy.Utils
 {
@@ -46,7 +47,7 @@ namespace Arvan.Proxy.Utils
             try
             {
                 var serializedContent = await self.Content.ReadAsStringAsync();
-                var value = default(T); // TODO JsonSerializer.DeserializeFromString<T>(serializedContent);
+                var value = JsonConvert.DeserializeObject<T>(serializedContent);
 
                 return value;
             }
