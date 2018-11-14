@@ -1,0 +1,3 @@
+﻿{
+  "ApiKey": "COPY THIS FILE TO testsettings.devlocal.json AND PASTE YOUR TEST API KEY HERE, WITHOUT THE Apikey PREFIX"
+}
