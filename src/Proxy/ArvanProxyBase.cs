@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,16 +27,39 @@ namespace Arvan.Proxy
                 response.EnsureSuccessStatusCode();
         }
 
-        protected async Task<HttpResponseMessage> GenericSendRequestAsync(HttpMethod method, string address,
-            object request = null)
+        protected Task<HttpResponseMessage> GenericSendRequestAsync(HttpMethod method, string address)
+        {
+            return GenericSendRequestAsync(method, address, (HttpContent)null);
+        }
+        
+        protected Task<HttpResponseMessage> GenericSendRequestAsync(HttpMethod method, string address, object request)
+        {
+            HttpContent content = null;
+                
+            if (request != null)
+                content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            
+            return GenericSendRequestAsync(method, address, content);
+        }
+
+        protected Task<HttpResponseMessage> GenericSendRequestAsync(HttpMethod method, string address, 
+            IEnumerable<KeyValuePair<string, string>> formData)
+        {
+            HttpContent content = null;
+                
+            if (formData != null)
+                content = new FormUrlEncodedContent(formData);
+            
+            return GenericSendRequestAsync(method, address, content);
+        }
+
+        protected async Task<HttpResponseMessage> GenericSendRequestAsync(HttpMethod method, string address, 
+            HttpContent content)
         {
             if (address.IsNullOrWhitespace())
                 throw new ArgumentNullException(nameof(address));
 
-            var payload = new HttpRequestMessage(method, address);
-            
-            if (request != null)
-                payload.Content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            var payload = new HttpRequestMessage(method, address) {Content = content};
 
             _internalData.Settings.RequestAuthorization?.Apply(payload);
 

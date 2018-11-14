@@ -28,6 +28,17 @@ namespace Arvan.Proxy.Utils
             return ApiValidatedResult<TResponse>.Failure(response.ToValidationError());
         }
 
+        public static async Task<ApiValidatedResult<string>> ToRawValidatedResult(this HttpResponseMessage response)
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return ApiValidatedResult<string>.Ok(content);
+            }
+
+            return ApiValidatedResult<string>.Failure(await response.Content.ReadAsStringAsync());
+        }
+
         public static ApiValidationError ToValidationError(this HttpResponseMessage response)
         {
             return new ApiValidationError(response.StatusCode.ToString(), response.ReasonPhrase.Yield());

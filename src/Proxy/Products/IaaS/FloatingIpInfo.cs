@@ -4,12 +4,7 @@ using Newtonsoft.Json;
 
 namespace Arvan.Proxy.Products.IaaS
 {
-    public class GetFloatIpListResponse
-    {
-        public List<GetFloatIpListResponseItem> Data { get; set; }
-    }
-
-    public class GetFloatIpListResponseItem
+    public class FloatingIpInfo
     {
         public string Id { get; set; }
         public string Status { get; set; }
