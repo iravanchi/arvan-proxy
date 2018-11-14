@@ -30,29 +30,31 @@ namespace Arvan.Proxy.Products
             return await response.ToValidatedResult<CreateFloatingIpResponse>();
         }
 
-        public async Task<ApiValidatedResult<string>> DeleteFloatingIp(string id)
+        public async Task<ApiValidatedResult<DeleteFloatingIpResponse>> DeleteFloatingIp(string id)
         {
             var response = await GenericSendRequestAsync(HttpMethod.Delete, $"/iaas/v1/float-ip/{id}");
-            return await response.ToRawValidatedResult();
+            return await response.ToValidatedResult<DeleteFloatingIpResponse>();
         }
         
         public async Task<ApiValidatedResult<string>> AttachFloatingIp(string id, string serverId, string subnetId)
         {
-            var response = await GenericSendRequestAsync(new HttpMethod("PATCH"), $"/iaas/v1/float-ip/{id}/attach", new
-            {
-                Server_Id = serverId,
-                Subnet_Id = subnetId
-            });
+            var response = await GenericSendRequestAsync(new HttpMethod("PATCH"), $"/iaas/v1/float-ip/{id}/attach",
+                new Dictionary<string, string>
+                {
+                    {"server_Id", serverId},
+                    {"subnet_Id", subnetId}
+                });
 
             return await response.ToRawValidatedResult();
         }
         
         public async Task<ApiValidatedResult<string>> DetachFloatingIp(string serverId)
         {
-            var response = await GenericSendRequestAsync(new HttpMethod("PATCH"), $"/iaas/v1/float-ip/attach", new
-            {
-                Server_Id = serverId
-            });
+            var response = await GenericSendRequestAsync(new HttpMethod("PATCH"), $"/iaas/v1/float-ip/attach",
+                new Dictionary<string, string>
+                {
+                    {"server_Id", serverId}
+                });
 
             return await response.ToRawValidatedResult();
         }
