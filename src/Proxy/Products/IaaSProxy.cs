@@ -12,7 +12,9 @@ namespace Arvan.Proxy.Products
         internal IaaSProxy(ArvanProxyInternalData internalData) : base(internalData)
         {
         }
-        
+
+        #region Floating IP
+
         public async Task<ApiValidatedResult<GetFloatingIpListResponse>> GetFloatingIpList()
         {
             var response = await GenericSendRequestAsync(HttpMethod.Get, "/iaas/v1/float-ip");
@@ -58,5 +60,17 @@ namespace Arvan.Proxy.Products
 
             return await response.ToRawValidatedResult();
         }
+
+        #endregion
+        
+        #region Image
+        
+        public async Task<ApiValidatedResult<GetImageListResponse>> GetImageList()
+        {
+            var response = await GenericSendRequestAsync(HttpMethod.Get, "/iaas/v1/image");
+            return await response.ToValidatedResult<GetImageListResponse>();
+        }
+        
+        #endregion
     }
 }
