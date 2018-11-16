@@ -12,6 +12,5 @@ namespace Arvan.Proxy.Tests.IaaS
             var result = CheckSuccess(await Client.IaaS.GetImageList());
             Assert.NotNull(result);
         }
-
     }
 }

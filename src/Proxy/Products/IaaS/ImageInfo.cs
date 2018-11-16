@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Arvan.Proxy.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -27,13 +28,9 @@ namespace Arvan.Proxy.Products.IaaS
        
        public string Checksum { get; set; }
        
-//       TODO: Conversion required
-//       "created_at":{
-//          "date":"2018-10-21 10:17:34.000000",
-//          "timezone_type":2,
-//          "timezone":"Z"
-//       },
-//       public DateTime CreatedOn { get; set; }
+       [JsonConverter(typeof(NestedDateTimeObjectConverter))]
+       [JsonProperty("created_at")]
+       public DateTime CreatedOn { get; set; }
        
        [JsonProperty("container_format")]
        public string ContainerFormat { get; set; }
