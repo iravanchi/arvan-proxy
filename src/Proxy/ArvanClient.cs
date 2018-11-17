@@ -13,14 +13,12 @@ namespace Arvan.Proxy
 
         public ArvanClient()
         {
-            var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://napi.arvancloud.com/");
-
             _internalData = new ArvanProxyInternalData
             {
                 ClientInstance = this,
                 Settings = new ArvanClientSettings(),
-                HttpClient = httpClient
+                HttpClient = new HttpClient(),
+                BaseUri = new Uri("https://napi.arvancloud.com/")
             };
 
             InitializeClients();

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Arvan.Proxy.Utils;
 using Hydrogen.General.Text;
-using Hydrogen.General.Validation;
 using Newtonsoft.Json;
 
 namespace Arvan.Proxy
@@ -19,67 +18,35 @@ namespace Arvan.Proxy
             _internalData = internalData;
         }
 
-        protected HttpClient HttpClient => _internalData.HttpClient;
-
-        protected void ThrowOnErrorIfRequired(HttpResponseMessage response)
-        {
-            if (_internalData.Settings.ThrowOnErrorStatusCode)
-                response.EnsureSuccessStatusCode();
-        }
-
-        protected Task<HttpResponseMessage> GenericSendRequestAsync(HttpMethod method, string address)
-        {
-            return GenericSendRequestAsync(method, address, (HttpContent)null);
-        }
-        
-        protected Task<HttpResponseMessage> GenericSendRequestAsync(HttpMethod method, string address, object request)
+        protected async Task<HttpResponseMessage> GenericSendRequestAsync(HttpMethod method, string relativeUri, 
+            IEnumerable<KeyValuePair<string, string>> queryString = null, object jsonRequestBody = null, 
+            IEnumerable<KeyValuePair<string, string>> formDataRequestBody = null)
         {
             HttpContent content = null;
                 
-            if (request != null)
-                content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
-            
-            return GenericSendRequestAsync(method, address, content);
-        }
+            if (relativeUri.IsNullOrWhitespace())
+                throw new ArgumentNullException(nameof(relativeUri));
+            if (jsonRequestBody != null && formDataRequestBody != null)
+                throw new ArgumentException("Cannot set FormData and JSON at the same time.");
 
-        protected Task<HttpResponseMessage> GenericSendRequestAsync(HttpMethod method, string address, 
-            IEnumerable<KeyValuePair<string, string>> formData)
-        {
-            HttpContent content = null;
-                
-            if (formData != null)
-                content = new FormUrlEncodedContent(formData);
-            
-            return GenericSendRequestAsync(method, address, content);
-        }
+            if (jsonRequestBody!= null)
+                content = new StringContent(JsonConvert.SerializeObject(jsonRequestBody), Encoding.UTF8, "application/json");
+            if (formDataRequestBody != null)
+                content = new FormUrlEncodedContent(formDataRequestBody);
 
-        protected async Task<HttpResponseMessage> GenericSendRequestAsync(HttpMethod method, string address, 
-            HttpContent content)
-        {
-            if (address.IsNullOrWhitespace())
-                throw new ArgumentNullException(nameof(address));
-
-            var payload = new HttpRequestMessage(method, address) {Content = content};
-
+            var uri = new Uri(_internalData.BaseUri, relativeUri).AddQueries(queryString);
+            var payload = new HttpRequestMessage(method, uri) {Content = content};
             _internalData.Settings.RequestAuthorization?.Apply(payload);
 
-            var response = await HttpClient.SendAsync(payload);
+            var response = await _internalData.HttpClient.SendAsync(payload);
             ThrowOnErrorIfRequired(response);
             return response;
         }
 
-        protected async Task<ApiValidatedResult<TResponse>> InternalSendRequest<TResponse>(HttpMethod method,
-            string address, object request = null)
+        private void ThrowOnErrorIfRequired(HttpResponseMessage response)
         {
-            var response = await GenericSendRequestAsync(method, address, request);
-            return await response.ToValidatedResult<TResponse>();
-        }
-
-        protected async Task<ApiValidationResult> InternalSendRequest(HttpMethod method, string address,
-            object request = null)
-        {
-            var response = await GenericSendRequestAsync(method, address, request);
-            return response.ToValidationResult();
+            if (_internalData.Settings.ThrowOnErrorStatusCode)
+                response.EnsureSuccessStatusCode();
         }
     }
 }

@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Arvan.Proxy.Products.IaaS;
 using Arvan.Proxy.Utils;
+using Hydrogen.General.Text;
 using Hydrogen.General.Validation;
 
 namespace Arvan.Proxy.Products
@@ -23,8 +25,9 @@ namespace Arvan.Proxy.Products
 
         public async Task<ApiValidatedResult<CreateFloatingIpResponse>> CreateFloatingIp(string description)
         {
-            var response = await GenericSendRequestAsync(HttpMethod.Post, "/iaas/v1/float-ip",
-                new Dictionary<string, string>
+            var response = await GenericSendRequestAsync(
+                HttpMethod.Post, "/iaas/v1/float-ip",
+                formDataRequestBody: new Dictionary<string, string>
                 {
                     {"description", description}
                 });
@@ -40,8 +43,9 @@ namespace Arvan.Proxy.Products
         
         public async Task<ApiValidatedResult<string>> AttachFloatingIp(string id, string serverId, string subnetId)
         {
-            var response = await GenericSendRequestAsync(new HttpMethod("PATCH"), $"/iaas/v1/float-ip/{id}/attach",
-                new Dictionary<string, string>
+            var response = await GenericSendRequestAsync(
+                new HttpMethod("PATCH"), $"/iaas/v1/float-ip/{id}/attach",
+                formDataRequestBody: new Dictionary<string, string>
                 {
                     {"server_Id", serverId},
                     {"subnet_Id", subnetId}
@@ -52,8 +56,9 @@ namespace Arvan.Proxy.Products
         
         public async Task<ApiValidatedResult<string>> DetachFloatingIp(string serverId)
         {
-            var response = await GenericSendRequestAsync(new HttpMethod("PATCH"), $"/iaas/v1/float-ip/attach",
-                new Dictionary<string, string>
+            var response = await GenericSendRequestAsync(
+                new HttpMethod("PATCH"), "/iaas/v1/float-ip/detach",
+                formDataRequestBody: new Dictionary<string, string>
                 {
                     {"server_Id", serverId}
                 });
@@ -65,9 +70,14 @@ namespace Arvan.Proxy.Products
         
         #region Image
         
-        public async Task<ApiValidatedResult<GetImageListResponse>> GetImageList()
+        public async Task<ApiValidatedResult<GetImageListResponse>> GetImageList(ImageType? type = null, int? limit = null, string lastId = null)
         {
-            var response = await GenericSendRequestAsync(HttpMethod.Get, "/iaas/v1/image");
+            var queryString = new Dictionary<string, string>();
+            if (type.HasValue) queryString["type"] = type.Value.ToString().ToLower();
+            if (limit.HasValue) queryString["limit"] = limit.Value.ToString();
+            if (!lastId.IsNullOrWhitespace()) queryString["lastId"] = lastId;
+            
+            var response = await GenericSendRequestAsync(HttpMethod.Get, "/iaas/v1/image", queryString);
             return await response.ToValidatedResult<GetImageListResponse>();
         }
         
