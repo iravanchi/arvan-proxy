@@ -7,7 +7,7 @@
 # arvan-proxy
 
 [Documentation](https://github.com/iravanchi/arvan-proxy/wiki) -
-[Quick Start](https://github.com/iravanchi/arvan-proxy/wiki/Quick-Start-guide)
+[Quick Start](https://github.com/iravanchi/arvan-proxy/wiki/Quick-Start-guide) -
 [Examples](https://github.com/iravanchi/arvan-proxy/wiki/Examples)
 
 [Arvan Cloud](https://arvancloud.com/) is an emerging cloud provider quickly building up its product portfolio.
