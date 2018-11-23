@@ -9,26 +9,49 @@ configuration: Release
 init:
 - ps: >-
     $ErrorActionPreference = "Stop"
+
+
     if ($env:APPVEYOR_REPO_TAG -ne "true")
+
     {
         throw "This build should only be triggered using tags in repository."
     }
+
+
     $tag = $env:APPVEYOR_REPO_TAG_NAME
+
     if (-not ($tag -match '^\d+\.\d+\.\d+$'))
+
     {
         throw "Tag format is invalid. It should be x.y.z"
     }
+
+
     $isPrerelease = $env:APPVEYOR_REPO_BRANCH -ne "master"
+
     $buildNumber = $env:APPVEYOR_BUILD_NUMBER
+
     $buildVersion = $buildNumber + "-" + $tag
+
     $packageVersion = $tag + $(If ($isPrerelease) {"-pre"} Else {""})
+
     $assemblyVersion = $tag + $(If ($isPrerelease) {".0"} Else {".1"})
+
+
     Update-AppveyorBuild -Version $buildVersion
+
+
     $env:CLAY_ONE_PACKAGE_VERSION = $packageVersion
+
     $env:CLAY_ONE_ASSEMBLY_VERSION = $assemblyVersion
+
     $env:CLAY_ONE_IS_PRERELEASE = "$isPrerelease"
+
+
     [Environment]::SetEnvironmentVariable("CLAY_ONE_PACKAGE_VERSION", $packageVersion, "Machine")
+
     [Environment]::SetEnvironmentVariable("CLAY_ONE_ASSEMBLY_VERSION", $assemblyVersion, "Machine")
+
     [Environment]::SetEnvironmentVariable("CLAY_ONE_IS_PRERELEASE", "$isPrerelease", "Machine")
 dotnet_csproj:
   patch: true
@@ -48,7 +71,7 @@ test: off
 deploy:
 - provider: NuGet
   api_key:
-    secure: uuhiO39mkvUliU7VNj6pHFhu7DU8KzwNbo/BAww8Ll388wmgtBpTGuu8jBZ45iYB
+    secure: PzYby/lqf25N4i6X6nStjVZZSDZLpM2b5hJYH3uJ87ToyxneJjdM7q4oHTPPXy1G
 - provider: GitHub
   tag: $(APPVEYOR_REPO_TAG_NAME)
   description: Release $(APPVEYOR_REPO_TAG_NAME)
