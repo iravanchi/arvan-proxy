@@ -16,10 +16,10 @@ namespace Arvan.Proxy.Products.IaaS
         public string Description { get; set; }
         
         [JsonProperty("created_at")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedOn { get; set; }
         
         [JsonProperty("updated_at")]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedOn { get; set; }
         
         [JsonProperty("revision_number")]
         public int RevisionNumber { get; set; }
