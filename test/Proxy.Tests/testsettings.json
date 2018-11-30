@@ -1,3 +1,4 @@
 ﻿{
-  "ApiKey": "COPY THIS FILE TO testsettings.devlocal.json AND PASTE YOUR TEST API KEY HERE, WITHOUT THE Apikey PREFIX"
+  "ApiKey": "COPY THIS FILE TO testsettings.devlocal.json AND PASTE YOUR TEST API KEY HERE, WITHOUT THE Apikey PREFIX",
+  "BearerToken": "Same as above. BearerToken only works if ApiKey is not specified."
 }

@@ -16,10 +16,23 @@ namespace Arvan.Proxy.Tests.Base
                 .AddJsonFile("testsettings.devlocal.json", true)
                 .Build();
 
-            var apiKey = config.GetValue<string>("ApiKey");
-            Client = new ArvanClient(new ApiKeyRequestAuthorization(apiKey));
+            Client = BuildClient(config);
         }
-        
+
+        private static ArvanClient BuildClient(IConfigurationRoot config)
+        {
+            var apiKey = config.GetValue<string>("ApiKey");
+            var bearerToken = config.GetValue<string>("BearerToken");
+
+            RequestAuthorizationBase authorization = null;
+            if (!string.IsNullOrWhiteSpace(apiKey))
+                authorization = new ApiKeyRequestAuthorization(apiKey);
+            else if (!string.IsNullOrWhiteSpace(bearerToken))
+                authorization = new BearerRequestAuthorization(bearerToken);
+            
+            return new ArvanClient(authorization);
+        }
+
         protected T CheckSuccess<T>(ApiValidatedResult<T> result)
         {
             Assert.NotNull(result);
