@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Arvan.Proxy.Utils;
@@ -36,6 +37,8 @@ namespace Arvan.Proxy
 
             var uri = new Uri(_internalData.BaseUri, relativeUri).AddQueries(queryString);
             var payload = new HttpRequestMessage(method, uri) {Content = content};
+            payload.Headers.Accept.Clear();
+            payload.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _internalData.Settings.RequestAuthorization?.Apply(payload);
 
             var response = await _internalData.HttpClient.SendAsync(payload);
