@@ -214,8 +214,8 @@ namespace Arvan.Proxy.Products
         
         #region Server
 
-        public async Task<ApiValidatedResult<string>> GetServerList(int? limit = null, string lastId = null,
-            string with = null)
+        public async Task<ApiValidatedResult<GetServerListResponse>> GetServerList(int? limit = null, 
+            string lastId = null, string with = null)
         {
             var queryString = new Dictionary<string, string>();
             if (limit.HasValue) queryString["limit"] = limit.Value.ToString();
@@ -223,7 +223,7 @@ namespace Arvan.Proxy.Products
             if (!with.IsNullOrWhitespace()) queryString["with"] = with;
 
             var response = await GenericSendRequestAsync(HttpMethod.Get, "/iaas/v1/server", queryString);
-            return await response.ToRawValidatedResult();
+            return await response.ToValidatedResult<GetServerListResponse>();
         }
 
         public async Task<ApiValidatedResult<string>> GetDetailedServerList(int? limit = null, string lastId = null,
