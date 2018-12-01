@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Arvan.Proxy.Converters;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Arvan.Proxy.Products.IaaS
 {
@@ -15,7 +16,8 @@ namespace Arvan.Proxy.Products.IaaS
 
         public List<LinkDetailedInfo> Links { get; set; }
 
-        public ImageMetadataInfo Metadata { get; set; }
+        // TODO replace with better object type
+        public JContainer Metadata { get; set; }
         
         [JsonProperty("minDisk")]
         public int MinDiskGb { get; set; }
