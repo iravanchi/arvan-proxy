@@ -15,10 +15,10 @@ namespace Arvan.Proxy.Products.IaaS
        public string Name { get; set; }
        
        [JsonProperty("min_ram")]
-       public int MinRam { get; set; }
+       public int MinMemoryMb { get; set; }
        
        [JsonProperty("min_disk")]
-       public int MinDisk { get; set; }
+       public int MinDiskGb { get; set; }
        
        [JsonProperty("disk_format")]
        public string DiskFormat { get; set; }
@@ -30,7 +30,7 @@ namespace Arvan.Proxy.Products.IaaS
        
        [JsonConverter(typeof(NestedDateTimeObjectConverter))]
        [JsonProperty("created_at")]
-       public DateTime CreatedOn { get; set; }
+       public DateTime CreatedAt { get; set; }
        
        [JsonProperty("container_format")]
        public string ContainerFormat { get; set; }

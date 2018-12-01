@@ -1,8 +1,7 @@
 namespace Arvan.Proxy.Products.IaaS
 {
-    public class ServerSummaryInfo
+    public class SecurityGroupInfo
     {
-        public string Id { get; set; }
         public string Name { get; set; }
     }
 }

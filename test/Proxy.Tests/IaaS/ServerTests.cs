@@ -24,15 +24,27 @@ namespace Arvan.Proxy.Tests.IaaS
         public async Task TestGetServerDetails()
         {
             var servers = CheckSuccess(await Client.IaaS.GetServerList());
+            // Assuming there is at least one server present and returned
+            Assert.NotNull(servers);
+            Assert.NotNull(servers.Data);
+            Assert.NotEmpty(servers.Data);
             
-            var result = CheckSuccess(await Client.IaaS.GetServerDetails(""));
+            var result = CheckSuccess(await Client.IaaS.GetServerDetails(servers.Data[0].Id));
             Assert.NotNull(result);
+            Assert.NotNull(result.Data);
         }
 
         [Fact]
         public async Task TestGetServerVncConsole()
         {
+            var servers = CheckSuccess(await Client.IaaS.GetServerList());
+            // Assuming there is at least one server present and returned
+            Assert.NotNull(servers);
+            Assert.NotNull(servers.Data);
+            Assert.NotEmpty(servers.Data);
             
+            var result = CheckSuccess(await Client.IaaS.GetServerVncConsole(servers.Data[0].Id));
+            Assert.NotNull(result);
         }
         
         [Fact]
@@ -53,7 +65,12 @@ namespace Arvan.Proxy.Tests.IaaS
         public async Task TestGetServerActionsList()
         {
             var servers = CheckSuccess(await Client.IaaS.GetServerList());
-            var result = CheckSuccess(await Client.IaaS.GetServerActionsList(""));
+            // Assuming there is at least one server present and returned
+            Assert.NotNull(servers);
+            Assert.NotNull(servers.Data);
+            Assert.NotEmpty(servers.Data);
+            
+            var result = CheckSuccess(await Client.IaaS.GetServerActionsList(servers.Data[0].Id));
             Assert.NotNull(result);
         }
 
