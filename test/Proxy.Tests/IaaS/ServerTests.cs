@@ -62,7 +62,7 @@ namespace Arvan.Proxy.Tests.IaaS
         }
 
         [Fact]
-        public async Task TestGetServerActionsList()
+        public async Task TestGetServerActionHistory()
         {
             var servers = CheckSuccess(await Client.IaaS.GetServerList());
             // Assuming there is at least one server present and returned
@@ -70,7 +70,7 @@ namespace Arvan.Proxy.Tests.IaaS
             Assert.NotNull(servers.Data);
             Assert.NotEmpty(servers.Data);
             
-            var result = CheckSuccess(await Client.IaaS.GetServerActionsList(servers.Data[0].Id));
+            var result = CheckSuccess(await Client.IaaS.GetServerActionHistory(servers.Data[0].Id));
             Assert.NotNull(result);
         }
 

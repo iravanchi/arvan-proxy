@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Arvan.Proxy.Products.IaaS
 {
-    public class FlavorDetailedInfo
+    public class ServerDetailedFlavorInfo
     {
         public string Id { get; set; }
         

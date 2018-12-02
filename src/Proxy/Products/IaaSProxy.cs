@@ -257,10 +257,10 @@ namespace Arvan.Proxy.Products
             return await response.ToRawValidatedResult();
         }
 
-        public async Task<ApiValidatedResult<string>> GetServerFlavorList()
+        public async Task<ApiValidatedResult<GetServerFlavorListResponse>> GetServerFlavorList()
         {
             var response = await GenericSendRequestAsync(HttpMethod.Get, "/iaas/v1/size");
-            return await response.ToRawValidatedResult();
+            return await response.ToValidatedResult<GetServerFlavorListResponse>();
         }
         
         public Task<ApiValidatedResult<string>> CreateServer(string name, string flavorId, string imageId,
@@ -274,7 +274,7 @@ namespace Arvan.Proxy.Products
             throw new NotImplementedException();
         }
 
-        public async Task<ApiValidatedResult<string>> GetServerActionsList(string serverId)
+        public async Task<ApiValidatedResult<string>> GetServerActionHistory(string serverId)
         {
             var response = await GenericSendRequestAsync(HttpMethod.Get, $"/iaas/v1/server/{serverId}/action");
             return await response.ToRawValidatedResult();

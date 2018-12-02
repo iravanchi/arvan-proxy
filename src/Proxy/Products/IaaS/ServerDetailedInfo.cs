@@ -14,7 +14,7 @@ namespace Arvan.Proxy.Products.IaaS
         [JsonConverter(typeof(NestedDateTimeObjectConverter))]
         public DateTime CreatedAt { get; set; }
         
-        public FlavorDetailedInfo Flavor { get; set; }
+        public ServerDetailedFlavorInfo Flavor { get; set; }
         
         public ImageDetailedInfo Image { get; set; }
         
