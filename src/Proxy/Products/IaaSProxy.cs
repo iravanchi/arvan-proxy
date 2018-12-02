@@ -274,10 +274,10 @@ namespace Arvan.Proxy.Products
             throw new NotImplementedException();
         }
 
-        public async Task<ApiValidatedResult<string>> GetServerActionHistory(string serverId)
+        public async Task<ApiValidatedResult<GetServerActionHistoryResponse>> GetServerActionHistory(string serverId)
         {
             var response = await GenericSendRequestAsync(HttpMethod.Get, $"/iaas/v1/server/{serverId}/action");
-            return await response.ToRawValidatedResult();
+            return await response.ToValidatedResult<GetServerActionHistoryResponse>();
         }
 
         public Task<ApiValidatedResult<string>> RequestServerAction(string serverId, ServerAction action)
