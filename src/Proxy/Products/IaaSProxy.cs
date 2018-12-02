@@ -245,10 +245,10 @@ namespace Arvan.Proxy.Products
             return await response.ToValidatedResult<GetServerDetailsResponse>();
         }
 
-        public async Task<ApiValidatedResult<string>> GetServerVncConsole(string serverId)
+        public async Task<ApiValidatedResult<GetServerVncConsoleResponse>> GetServerVncConsole(string serverId)
         {
             var response = await GenericSendRequestAsync(HttpMethod.Get, $"/iaas/v1/server/{serverId}/vnc");
-            return await response.ToRawValidatedResult();
+            return await response.ToValidatedResult<GetServerVncConsoleResponse>();
         }
         
         public async Task<ApiValidatedResult<string>> GetServerCreationOptions()
